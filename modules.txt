@@ -1,0 +1,6 @@
+  lareferencia-platform-lite
+  lareferencia-oclc-harvester
+  lareferencia-solr-cores
+  lareferencia-core-lib
+  lareferencia-shell
+  lareferencia-lrharvester-app
