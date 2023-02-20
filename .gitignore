@@ -29,3 +29,4 @@ HELP.md
 .vscode/
 config/application.properties
 harvester.jar
+pom.xml.versionsBackup
