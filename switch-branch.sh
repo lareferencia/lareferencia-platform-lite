@@ -31,27 +31,14 @@ read -r -a modules <<< $(cat modules.txt)
 # print modules
 echo "Modules: ${modules[@]}"
 
-# iterate over modules and switch to /create  branch
+# iterate over modules and switch to change  branch
 for module in "${modules[@]}"; do
 
     echo "Module: $module"
     cd $LAREFERENCIA_HOME/$module
 
-    # check if branch exists in local
-    if [[ `git branch | egrep "^\*?[[:space:]]+${branch}$"` ]]; then
-        echo "Module: $module branch $branch exists in local"
-        # switch to branch
-        git checkout $branch
-    else
-        echo "Module: $module branch $branch does not exist in local"
-    fi
-
-    # if branch does not exist in remote and publish is true, push branch to github
-    if ! ( [[ `git ls-remote --exit-code --heads origin $branch` ]] ) ; then
-        echo "Module: $module branch $branch does not exist in remote, sorry!"       
-    else # if branch exists in remote, pull changes 
-        echo "Module: $module branch $branch exists in remote"
-        git pull
-    fi
+    git fetch --all
+    git checkout $branch
+    git pull
 
 done
