@@ -22,22 +22,29 @@ fi
 
 # load configuration from enviroment.sh
 source enviroment.sh
+source read_modules.sh
 
 # print configuration
 echo "LAREFERENCIA_PLATFORM_PATH: $LAREFERENCIA_PLATFORM_PATH"
 echo "LAREFERENCIA_HOME: $LAREFERENCIA_HOME"
 echo "LAREFERENCIA_GITHUB_REPO: $LAREFERENCIA_GITHUB_REPO"
 
-# load modules from modules.txt
-read -r -a modules <<< $(cat modules.txt)
+# read modules from modules.txt
+modules=()
+while IFS= read -r line; do
+  # Eliminar espacios en blanco al principio y al final de la línea
+  line=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+  # Ignorar líneas que comienzan con #
+  if [[ $line != \#* ]]; then
+    modules+=("$line")
+  fi
+done < modules.txt
+
+# read modules from modules.txt
+modules=($(read_modules))
 
 # print modules
 echo "Modules: ${modules[@]}"
-
-
-LAREFERENCIA_PROJECTS=("${modules[@]}")
-
-
 
 msg() {
   echo -e "\x1B[32m[LAREFERENCIA]\x1B[0m $1"
