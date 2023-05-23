@@ -4,6 +4,8 @@ set -eou pipefail
 
 # load configuration from enviroment.sh
 source enviroment.sh
+source read_modules.sh
+
 
 # print configuration
 echo "LAREFERENCIA_PLATFORM_PATH: $LAREFERENCIA_PLATFORM_PATH"
@@ -24,9 +26,8 @@ else
   branch="main"
 fi
 
-
-# load modules from modules.txt
-read -r -a modules <<< $(cat modules.txt)
+# read modules from modules.txt
+modules=($(read_modules))
 
 # print modules
 echo "Modules: ${modules[@]}"
